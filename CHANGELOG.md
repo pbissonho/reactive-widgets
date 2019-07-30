@@ -1,3 +1,14 @@
-## [0.0.1] - TODO: Add release date.
+## [0.0.1] - (Jul 25, 2019)
 
-* TODO: Describe initial release.
+* Initial Release
+  
+  Four reactive widgets available for use.
+
+    ReactiveListView
+    ReactiveBuilder
+    ReactiveText
+    ReactiveDialog
+
+## [0.0.2] - (Jul 30, 2019)
+
+* Fiz ReactiveListView error.
