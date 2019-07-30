@@ -34,7 +34,7 @@ class ReactiveListView<T> extends ReactiveWidget<List<T>> {
     this.addRepaintBoundaries = true,
     this.addSemanticIndexes = true,
     this.separatorBuilder,
-    this.shrinkWrap,
+    this.shrinkWrap = true,
   }) : super(stream: stream, initialData: initialData);
 
   @override
@@ -48,7 +48,7 @@ class ReactiveListView<T> extends ReactiveWidget<List<T>> {
       );
     }
 
-    if (separatorBuilder == null) {
+    if (separatorBuilder != null) {
       listView = ListView.separated(
         scrollDirection: scrollDirection,
         addSemanticIndexes: addSemanticIndexes,
