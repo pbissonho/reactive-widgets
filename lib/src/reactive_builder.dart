@@ -1,31 +1,32 @@
 import 'package:flutter/material.dart';
 import '../reactive_widgets.dart';
 
-class ReactiveBuilder<T> extends ReactiveWidget<T> {
-  final Stream<T> stream;
-  final T initialData;
-  final Widget Function(BuildContext context, T data) builderWidget;
-  final Widget Function() onErroBuilder;
+typedef WidgetBuilder<T> = Widget Function(BuildContext context, T data);
 
-  const ReactiveBuilder(
-      {Key key,
-      @required this.stream,
-      @required this.builderWidget,
-      this.onErroBuilder,
-      this.initialData})
-      : super(key: key, stream: stream, initialData: initialData);
+class ReactiveBuilder<T> extends ReactiveWidget<T> {
+  final WidgetBuilder<T> builder;
+  final Widget Function(Object error) errorBuilder;
+  final Widget Function() emptyBuilder;
+
+  const ReactiveBuilder({
+    Key key,
+    @required Stream<T> stream,
+    T initialData,
+    @required this.builder,
+    this.emptyBuilder,
+    this.errorBuilder,
+  }) : super(stream, initialData, key: key);
 
   @override
-  Widget reactiveBuild(BuildContext context, T data) {
-    return builderWidget(context, data);
+  Widget build(BuildContext context, T data) => builder(context, data);
+
+  @override
+  Widget emptyBuild() {
+    return emptyBuilder != null ? emptyBuilder() : super.emptyBuild();
   }
 
   @override
-  Widget hasErroBuilder() {
-    if (onErroBuilder != null) {
-      return onErroBuilder();
-    } else {
-      return super.hasErroBuilder();
-    }
+  Widget errorBuild(Object error) {
+    return errorBuilder != null ? errorBuilder(error) : super.errorBuild(error);
   }
 }

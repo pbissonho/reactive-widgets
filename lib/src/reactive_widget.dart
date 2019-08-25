@@ -1,40 +1,39 @@
 import 'package:flutter/material.dart';
 
-abstract class ReactiveWidget<T> extends StatelessWidget {
+abstract class ReactiveWidget<T> extends StatefulWidget {
   final Stream<T> stream;
   final T initialData;
-  const ReactiveWidget({
-    Key key,
-    @required this.stream,
-    this.initialData,
-  }) : super(key: key);
+  Widget build(BuildContext context, T data);
 
-  @protected
-  Widget reactiveBuild(BuildContext context, T data);
+  const ReactiveWidget(this.stream, this.initialData, {Key key})
+      : super(key: key);
 
-  Widget hasErroBuilder() {
+  Widget errorBuild(Object error) {
     return Center(
-      child: Text("Error on builder reactive widget"),
+      child: Text(error),
     );
   }
 
-  Widget loadingDataBuilder() {
+  Widget emptyBuild() {
     return Center(
       child: CircularProgressIndicator(),
     );
   }
 
   @override
+  _ReactiveWidgetState<T> createState() => _ReactiveWidgetState<T>();
+}
+
+class _ReactiveWidgetState<T> extends State<ReactiveWidget<T>> {
+  @override
   Widget build(BuildContext context) {
     return StreamBuilder<T>(
-      initialData: initialData,
-      stream: stream,
+      initialData: widget.initialData,
+      stream: widget.stream,
       builder: (BuildContext context, AsyncSnapshot<T> snapshot) {
-        if (snapshot.hasError) return hasErroBuilder();
-
-        if (!snapshot.hasData) return loadingDataBuilder();
-
-        return reactiveBuild(context, snapshot.data);
+        if (snapshot.hasError) return widget.errorBuild(snapshot.error);
+        if (snapshot.hasData) return widget.build(context, snapshot.data);
+        return widget.emptyBuild();
       },
     );
   }

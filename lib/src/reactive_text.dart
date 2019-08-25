@@ -16,7 +16,8 @@ class ReactiveText extends ReactiveWidget<String> {
   final String semanticsLabel;
 
   ReactiveText(
-      {@required this.stream,
+      {Key key,
+      @required this.stream,
       this.initialData,
       this.style,
       this.strutStyle,
@@ -28,10 +29,10 @@ class ReactiveText extends ReactiveWidget<String> {
       this.textScaleFactor,
       this.maxLines,
       this.semanticsLabel})
-      : super(stream: stream, initialData: initialData);
+      : super(stream, initialData, key: key);
 
   @override
-  Widget reactiveBuild(BuildContext context, String data) {
+  Widget build(BuildContext context, String data) {
     return Text(
       data,
       textAlign: textAlign,

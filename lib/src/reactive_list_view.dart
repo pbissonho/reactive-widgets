@@ -4,9 +4,8 @@ import 'package:reactive_widgets/reactive_widgets.dart';
 class ReactiveListView<T> extends ReactiveWidget<List<T>> {
   final Stream<List<T>> stream;
   final List<T> initialData;
-  final Widget Function(BuildContext context, T element) itemBuilder;
+  final Widget Function(BuildContext context, T itemData) itemBuilder;
   final Widget separatorBuilder;
-
   final Key key;
   final Axis scrollDirection;
   final bool reverse;
@@ -35,10 +34,10 @@ class ReactiveListView<T> extends ReactiveWidget<List<T>> {
     this.addSemanticIndexes = true,
     this.separatorBuilder,
     this.shrinkWrap = true,
-  }) : super(stream: stream, initialData: initialData);
+  }) : super(stream, initialData);
 
   @override
-  Widget reactiveBuild(BuildContext context, List<T> data) {
+  Widget build(BuildContext context, List<T> data) {
     List<T> list = data;
     ListView listView;
 

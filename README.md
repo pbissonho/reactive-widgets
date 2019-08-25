@@ -1,14 +1,28 @@
-# hello
+# Reactive Widgets
 
-A new Flutter package project.
+A set of widgets to make it more easier to build reactive interfaces.
 
-## Getting Started
+# How To Use 
 
-This project is a starting point for a Dart
-[package](https://flutter.dev/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
+## 1º Create a StreamController 
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+    ``` dart
+    // Dart StreamController
+    _controller = StreamController<String>();
+
+    // RxDart BehaviourController
+    _behaviourController = BehaviourController<String>();
+    ```
+
+## 2º Replace StreamBuilder with some ReactiveWidget
+
+    ``` dart
+    ReactiveBuilder<String>(
+        stream: _controller.stream,
+        builder: (BuildContext context, int data) => Text(data.toString()),
+    ),
+
+    ReactiveText<String>(
+        stream: _controller.stream,
+    ),
+    ```

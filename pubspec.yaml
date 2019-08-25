@@ -1,6 +1,6 @@
 name: reactive_widgets
-description: Reactive widgets for flutter.
-version: 0.0.2
+description: A set of widgets to make it more easier to build reactive interfaces.
+version: 0.5.0
 author: Pedro Bissonho <pedro.bissonho@gmail.com>
 homepage: https://github.com/PedroBissonho/reactive-widgets
 
