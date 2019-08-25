@@ -1,5 +1,8 @@
+## [0.5.1] - (Aug 25, 2019)
 
-## [0.5.0] - (Aug 25, 2019)
+* Fix error on library export
+
+## [0.5.1] - (Aug 25, 2019)
 
 * ReactiveWidget methods have been renamed
 * Add custom object error message.

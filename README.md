@@ -6,7 +6,7 @@ A set of widgets to make it more easier to build reactive interfaces.
 
 ## 1º Create a StreamController 
 
-    ``` dart
+    ```dart
     // Dart StreamController
     _controller = StreamController<String>();
 
@@ -16,7 +16,7 @@ A set of widgets to make it more easier to build reactive interfaces.
 
 ## 2º Replace StreamBuilder with some ReactiveWidget
 
-    ``` dart
+    ```dart
     ReactiveBuilder<String>(
         stream: _controller.stream,
         builder: (BuildContext context, int data) => Text(data.toString()),
