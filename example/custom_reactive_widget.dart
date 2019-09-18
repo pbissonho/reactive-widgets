@@ -13,9 +13,9 @@ class MyReactiveWidget extends ReactiveWidget<User> {
 
   @override
   Widget build(BuildContext context, User data) {
-    return ListTile(
-      title: Text(data.name),
-      subtitle: Text(data.email),
+    return UserAccountsDrawerHeader(
+      accountName: Text(data.name),
+      accountEmail: Text(data.email),
     );
   }
 
@@ -25,7 +25,7 @@ class MyReactiveWidget extends ReactiveWidget<User> {
   }
 
   @override
-  Widget errorBuild(Object error) {
+  Widget errorBuild(_, Object error) {
     return Center(
       child: Text(error.toString()),
     );

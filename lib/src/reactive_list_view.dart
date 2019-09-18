@@ -1,10 +1,11 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:reactive_widgets/reactive_widgets.dart';
 
 class ReactiveListView<T> extends ReactiveWidget<List<T>> {
   final Stream<List<T>> stream;
   final List<T> initialData;
   final Widget Function(BuildContext context, T itemData) itemBuilder;
+  final Widget Function(BuildContext context) listEmptyBuilder;
   final Widget separatorBuilder;
   final Key key;
   final Axis scrollDirection;
@@ -19,6 +20,7 @@ class ReactiveListView<T> extends ReactiveWidget<List<T>> {
   final bool addSemanticIndexes;
 
   ReactiveListView({
+    this.listEmptyBuilder,
     @required this.stream,
     @required this.itemBuilder,
     this.initialData,
@@ -42,9 +44,9 @@ class ReactiveListView<T> extends ReactiveWidget<List<T>> {
     ListView listView;
 
     if (list.isEmpty) {
-      return Center(
-        child: Text("List is empty"),
-      );
+      if (listEmptyBuilder != null) return listEmptyBuilder(context);
+
+      return Container();
     }
 
     if (separatorBuilder != null) {

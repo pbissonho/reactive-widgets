@@ -1,24 +1,37 @@
-import 'package:flutter/material.dart';
-import '../reactive_widgets.dart';
+import 'package:flutter/widgets.dart';
+import 'package:reactive_widgets/src/reactive_widget.dart';
+import 'package:reactive_widgets/src/typedef.dart';
 
-typedef WidgetBuilder<T> = Widget Function(BuildContext context, T data);
-
-class ReactiveBuilder<T> extends ReactiveWidget<T> {
-  final WidgetBuilder<T> builder;
-  final Widget Function(Object error) errorBuilder;
-  final Widget Function() emptyBuilder;
+class ReactiveBuilder<T> extends ReactiveBuilderBase<T> {
+  final RWBuilder<T> builder;
 
   const ReactiveBuilder({
     Key key,
     @required Stream<T> stream,
     T initialData,
     @required this.builder,
-    this.emptyBuilder,
-    this.errorBuilder,
-  }) : super(stream, initialData, key: key);
+    EmptyBuilder emptyBuilder,
+    ErrorBuilder errorBuilder,
+  }) : super(
+            stream: stream,
+            emptyBuilder: emptyBuilder,
+            errorBuilder: errorBuilder);
 
   @override
   Widget build(BuildContext context, T data) => builder(context, data);
+}
+
+abstract class ReactiveBuilderBase<T> extends ReactiveWidget<T> {
+  final ErrorBuilder<T> errorBuilder;
+  final EmptyBuilder emptyBuilder;
+
+  const ReactiveBuilderBase({
+    Key key,
+    @required Stream<T> stream,
+    T initialData,
+    this.emptyBuilder,
+    this.errorBuilder,
+  }) : super(stream, initialData, key: key);
 
   @override
   Widget emptyBuild() {
@@ -26,7 +39,9 @@ class ReactiveBuilder<T> extends ReactiveWidget<T> {
   }
 
   @override
-  Widget errorBuild(Object error) {
-    return errorBuilder != null ? errorBuilder(error) : super.errorBuild(error);
+  Widget errorBuild(BuildContext context, Object error) {
+    return errorBuilder != null
+        ? errorBuilder(error)
+        : super.errorBuild(context, error);
   }
 }

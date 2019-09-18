@@ -1,23 +1,28 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 abstract class ReactiveWidget<T> extends StatefulWidget {
   final Stream<T> stream;
   final T initialData;
   Widget build(BuildContext context, T data);
 
+  @mustCallSuper
   const ReactiveWidget(this.stream, this.initialData, {Key key})
-      : super(key: key);
+      : assert(stream != null),
+        super(key: key);
 
-  Widget errorBuild(Object error) {
+  Widget errorBuild(BuildContext context, Object error) {
     return Center(
       child: Text(error),
     );
   }
 
   Widget emptyBuild() {
-    return Center(
-      child: CircularProgressIndicator(),
-    );
+    if (Platform.isIOS) return Center(child: CupertinoActivityIndicator());
+    return Center(child: CircularProgressIndicator());
   }
 
   @override
@@ -31,7 +36,8 @@ class _ReactiveWidgetState<T> extends State<ReactiveWidget<T>> {
       initialData: widget.initialData,
       stream: widget.stream,
       builder: (BuildContext context, AsyncSnapshot<T> snapshot) {
-        if (snapshot.hasError) return widget.errorBuild(snapshot.error);
+        if (snapshot.hasError)
+          return widget.errorBuild(context, snapshot.error);
         if (snapshot.hasData) return widget.build(context, snapshot.data);
         return widget.emptyBuild();
       },
