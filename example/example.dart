@@ -27,6 +27,8 @@ class _ExamplePageState extends State<SimpleExamplePage> {
   StreamController<List<String>> _controllerList;
   StreamController<StateTest> _statControler;
   StreamController<User> _userController;
+  StreamController<bool> _selectorController;
+  StreamController<int> _intController;
 
   @override
   void initState() {
@@ -34,6 +36,8 @@ class _ExamplePageState extends State<SimpleExamplePage> {
     _statControler = StreamController<StateTest>();
     _userController = StreamController<User>();
     _controllerList = StreamController<List<String>>();
+    _selectorController = StreamController<bool>();
+    _intController = StreamController<int>();
 
     super.initState();
   }
@@ -44,6 +48,8 @@ class _ExamplePageState extends State<SimpleExamplePage> {
     _controllerList.close();
     _statControler.close();
     _userController.close();
+    _selectorController.close();
+    _intController.close();
     super.dispose();
   }
 
@@ -72,6 +78,20 @@ class _ExamplePageState extends State<SimpleExamplePage> {
                     builder: (_, data) => Text(data.message)),
                 BuilderState<StateTest3>(
                     builder: (_, data) => Text(data.check.toString())),
+              ],
+            ),
+            ReactiveSelector(
+              stream: _selectorController.stream,
+              ontrue: Container(),
+              onfalse: Text("False"),
+            ),
+            ReactiveCondition<int>(
+              stream: _intController.stream,
+              defaultBuilder: (_, data) => Container(),
+              builders: <ConditionBuilder<int>>[
+                ConditionBuilder<int>(
+                    condition: (value) => value > 10,
+                    builder: (_, data) => Text(data.toString())),
               ],
             ),
           ],
