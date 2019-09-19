@@ -1,7 +1,6 @@
 # Reactive Widgets
 
 [![Build Status](https://travis-ci.com/PedroBissonho/reactive-widgets.svg?branch=master)](https://travis-ci.com/PedroBissonho/reactive-widgets)
-
 [![codecov](https://codecov.io/gh/PedroBissonho/reactive-widgets/branch/master/graph/badge.svg)](https://codecov.io/gh/PedroBissonho/reactive-widgets)
 
 
