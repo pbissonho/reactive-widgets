@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:reactive_widgets/reactive_widgets.dart';
-import 'package:reactive_widgets/src/reactive_builder.dart';
 
+// Classes for use in examples only
 class User {
   String name;
 }
@@ -17,6 +17,8 @@ class StateTest3 extends StateTest {
   bool check = false;
 }
 
+// A simple example page with all available reactive_widgets
+// Streams controlers are started in the widget for examples only
 class SimpleExamplePage extends StatefulWidget {
   @override
   _ExamplePageState createState() => _ExamplePageState();
@@ -62,15 +64,20 @@ class _ExamplePageState extends State<SimpleExamplePage> {
       body: Center(
         child: Column(
           children: <Widget>[
+            // Reactive Builder example
             ReactiveBuilder<String>(
               stream: _controller.stream,
               builder: (BuildContext context, String data) => Text(data),
             ),
+
+            // Reactive Builder example
             ReactiveListView<String>(
                 stream: _controllerList.stream,
                 itemBuilder: (BuildContext context, data) {
                   return ListTile(title: Text(data));
                 }),
+
+            // Reactive Builder example
             ReactiveStat<StateTest>(
               stream: _statControler.stream,
               builders: <BuilderState<StateTest>>[
@@ -80,11 +87,22 @@ class _ExamplePageState extends State<SimpleExamplePage> {
                     builder: (_, data) => Text(data.check.toString())),
               ],
             ),
+
+            // Reactive Selector example
             ReactiveSelector(
               stream: _selectorController.stream,
               ontrue: Container(),
               onfalse: Text("False"),
             ),
+
+            // Reactive Selector Builder example
+            ReactiveSelectorBuilder(
+              stream: _selectorController.stream,
+              trueBuilder: (_) => Container(),
+              falseBuilder: (_) => Text("False"),
+            ),
+
+            // Reactive Condition example
             ReactiveCondition<int>(
               stream: _intController.stream,
               defaultBuilder: (_, data) => Container(),
@@ -94,6 +112,7 @@ class _ExamplePageState extends State<SimpleExamplePage> {
                     builder: (_, data) => Text(data.toString())),
               ],
             ),
+            // Reactive Condition example
           ],
         ),
       ),
