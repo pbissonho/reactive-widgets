@@ -1,3 +1,14 @@
+## [0.6.3]
+
+* Internal improvements
+* Added ReactiveCondition widget
+* Added ReactiveSelector widget
+* Added ReactiveStat widget
+
+## [0.5.1] - (Aug 25, 2019)
+
+* Fix error on library export
+
 ## [0.5.1] - (Aug 25, 2019)
 
 * Fix error on library export
@@ -20,4 +31,6 @@
   Four reactive widgets available for use.
 
     ReactiveListView - ReactiveBuilder - ReactiveText - ReactiveDialog
+
+
 
